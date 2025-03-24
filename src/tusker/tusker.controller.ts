@@ -1,4 +1,45 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { TuskerService } from './tusker.service';
+import { CreateTuskerDto } from './dto/create-tusker.dto';
+import { UpdateTuskerDto } from './dto/update-tusker.dto';
+import { Tusker } from './tusker.schema';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
-@Controller('tusker')
-export class TuskerController {}
+
+@Controller('tuskers')
+export class TuskerController {
+  constructor(private readonly tuskerService: TuskerService) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async createTusker(@Body() createTuskerDto: CreateTuskerDto): Promise<Tusker> {
+    return this.tuskerService.createTusker(createTuskerDto);
+  }
+  
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  async updateTusker(@Param('id') id: string, @Body() updateTuskerDto: UpdateTuskerDto): Promise<Tusker> {
+    return this.tuskerService.updateTusker(id, updateTuskerDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async deleteTusker(@Param('id') id: string): Promise<Tusker> {
+    return this.tuskerService.deleteTusker(id);
+  }
+
+  @Get()
+  async getAllTuskers(): Promise<Tusker[]> {
+    return this.tuskerService.getAllTuskers();
+  }
+
+  @Get(':id')
+  async getTuskerById(@Param('id') id: string): Promise<Tusker> {
+    return this.tuskerService.getTuskerById(id);
+  }
+
+  @Get('tags/all')
+  async getAllTags(): Promise<string[]> {
+    return this.tuskerService.getAllTags();
+  }
+}
