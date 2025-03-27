@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { TuskerService } from './tusker.service';
 import { CreateTuskerDto } from './dto/create-tusker.dto';
 import { UpdateTuskerDto } from './dto/update-tusker.dto';
@@ -41,5 +41,20 @@ export class TuskerController {
   @Get('tags/all')
   async getAllTags(): Promise<string[]> {
     return this.tuskerService.getAllTags();
+  }
+
+  @Get('random/tusker')
+  async getRandomTuskers(): Promise<Tusker[]> {
+    return this.tuskerService.getRandomTuskers();
+  }
+
+  @Get('search/search-by-name')
+  async getTuskersByName(@Query('name') name: string): Promise<Tusker[]> {
+    return this.tuskerService.getTuskersByName(name);
+  }
+
+  @Get('search/search-by-category')
+  async getTuskersByCategory(@Query('category') category: string): Promise<Tusker[]> {
+    return this.tuskerService.getTuskersByCategory(category);
   }
 }

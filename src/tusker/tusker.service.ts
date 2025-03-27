@@ -47,4 +47,16 @@ export class TuskerService {
     const tags = tuskers.flatMap(tusker => tusker.tags);
     return [...new Set(tags)];
   }
+
+  async getRandomTuskers(): Promise<Tusker[]> {
+    return this.tuskerModel.aggregate([{ $sample: { size: 3 } }]).exec();
+  }
+
+  async getTuskersByName(name: string): Promise<Tusker[]> {
+    return this.tuskerModel.find({ name: { $regex: name, $options: 'i' } }).exec();
+  }
+
+  async getTuskersByCategory(category: string): Promise<Tusker[]> {
+    return this.tuskerModel.find({ category: { $regex: category, $options: 'i' } }).exec();
+  }
 }
