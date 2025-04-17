@@ -6,6 +6,7 @@ import { TuskerModule } from './tusker/tusker.module';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { SitemapModule } from './sitemap/sitemap.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forRoot(process.env.MONGO_URI),
     AdminModule, 
     TuskerModule, 
-    AuthModule],
+    AuthModule, SitemapModule],
   controllers: [AppController],
   providers: [AppService],
 })
