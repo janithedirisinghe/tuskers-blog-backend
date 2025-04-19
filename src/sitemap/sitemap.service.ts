@@ -20,7 +20,7 @@ export class SitemapService {
     const tuskers = await this.tuskerService.getAllTuskers(); // Should return tusker[] with slug/id
     tuskers.forEach(tusker => {
       smStream.write({
-        url: `/tuskers/${tusker.id}`,
+        url: `/tusker/${tusker.id}`,
         changefreq: 'weekly',
         priority: 0.9,
       });
