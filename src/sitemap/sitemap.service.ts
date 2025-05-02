@@ -10,19 +10,19 @@ export class SitemapService {
     const smStream = new SitemapStream({ hostname: 'https://www.srilankantusckers.com' });
 
     // Static URLs
-    smStream.write({ url: '/', changefreq: 'weekly', priority: 1.0 });
+    smStream.write({ url: '/', changefreq: 'daily', priority: 1.0 });
     smStream.write({ url: '/about', changefreq: 'monthly', priority: 0.8 });
     smStream.write({ url: '/contact', changefreq: 'monthly', priority: 0.8 });
-    smStream.write({ url: '/tuskers', changefreq: 'weekly', priority: 0.9 });
-    smStream.write({ url: '/search-results', changefreq: 'weekly', priority: 0.7 });
+    smStream.write({ url: '/tuskers', changefreq: 'daily', priority: 1.0 });
+    smStream.write({ url: '/search-results', changefreq: 'daily', priority: 1.0 });
 
     // Dynamic tusker URLs
     const tuskers = await this.tuskerService.getAllTuskers(); // Should return tusker[] with slug/id
     tuskers.forEach(tusker => {
       smStream.write({
         url: `/tusker/${tusker.id}`,
-        changefreq: 'weekly',
-        priority: 0.9,
+        changefreq: 'daily',
+        priority: 1.0,
       });
     });
 
