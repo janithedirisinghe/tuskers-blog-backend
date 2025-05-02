@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { TuskerService } from '../tusker/tusker.service';
+import { ArticleService } from '../article/article.service';
 
 @Injectable()
 export class SitemapService {
-  constructor(private readonly tuskerService: TuskerService) {}
+  constructor(
+    private readonly tuskerService: TuskerService,
+    private readonly articleService: ArticleService,
+  ) {}
 
   async generateSitemap(): Promise<string> {
     const smStream = new SitemapStream({ hostname: 'https://www.srilankantusckers.com' });
@@ -14,6 +18,7 @@ export class SitemapService {
     smStream.write({ url: '/about', changefreq: 'monthly', priority: 0.8 });
     smStream.write({ url: '/contact', changefreq: 'monthly', priority: 0.8 });
     smStream.write({ url: '/tuskers', changefreq: 'daily', priority: 1.0 });
+    smStream.write({ url: '/articles', changefreq: 'daily', priority: 1.0 });
     smStream.write({ url: '/search-results', changefreq: 'daily', priority: 1.0 });
 
     // Dynamic tusker URLs
@@ -23,6 +28,17 @@ export class SitemapService {
         url: `/tusker/${tusker.id}`,
         changefreq: 'daily',
         priority: 1.0,
+      });
+    });
+
+    // Dynamic article URLs
+    const articles = await this.articleService.findAll();
+    articles.forEach(article => {
+      smStream.write({
+        url: `/article/${article.id}`,
+        changefreq: 'daily',
+        priority: 1.0,
+        lastmod: article.publishDate,
       });
     });
 
