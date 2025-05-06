@@ -13,9 +13,9 @@ export class CreateArticleDto {
   @IsNotEmpty()
   content: string;
 
-  @IsString()
+  @IsArray()
   @IsOptional()
-  image: string;
+  images: string[];
 
   @IsString()
   @IsNotEmpty()

@@ -12,8 +12,8 @@ export class Article extends Document {
   @Prop({ required: true })
   content: string;
 
-  @Prop()
-  image: string;
+  @Prop([String])
+  images: string[];
 
   @Prop({ required: true })
   category: string;
