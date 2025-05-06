@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { SitemapService } from './sitemap.service';
 import { SitemapController } from './sitemap.controller';
-import { TuskerModule } from '../tusker/tusker.module'; // Import the module containing TuskerService
+import { TuskerModule } from '../tusker/tusker.module';
+import { ArticleModule } from '../article/article.module';
 
 @Module({
-  imports: [TuskerModule], // Add the import here
+  imports: [TuskerModule, ArticleModule],
   controllers: [SitemapController],
   providers: [SitemapService],
 })
