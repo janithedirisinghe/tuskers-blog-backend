@@ -20,6 +20,8 @@ export class SitemapService {
     smStream.write({ url: '/tuskers', changefreq: 'daily', priority: 1.0 });
     smStream.write({ url: '/articles', changefreq: 'daily', priority: 1.0 });
     smStream.write({ url: '/search-results', changefreq: 'daily', priority: 1.0 });
+    smStream.write({ url: '/privacy-policy', changefreq: 'daily', priority: 1.0 });
+    smStream.write({ url: '/terms-of-service', changefreq: 'daily', priority: 1.0 });
 
     // Dynamic tusker URLs
     const tuskers = await this.tuskerService.getAllTuskers(); // Should return tusker[] with slug/id
