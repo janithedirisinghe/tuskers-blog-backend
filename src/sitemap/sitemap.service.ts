@@ -23,21 +23,23 @@ export class SitemapService {
     smStream.write({ url: '/privacy-policy', changefreq: 'daily', priority: 1.0 });
     smStream.write({ url: '/terms-of-service', changefreq: 'daily', priority: 1.0 });
 
-    // Dynamic tusker URLs
-    const tuskers = await this.tuskerService.getAllTuskers(); // Should return tusker[] with slug/id
+    // Dynamic tusker URLs (use slugs)
+    const tuskers = await this.tuskerService.getAllTuskers();
     tuskers.forEach(tusker => {
+      if (!tusker.slug) return; // skip if slug not present
       smStream.write({
-        url: `/tusker/${tusker.id}`,
+        url: `/tuskers/${tusker.slug}`,
         changefreq: 'daily',
         priority: 1.0,
       });
     });
 
-    // Dynamic article URLs
+    // Dynamic article URLs (use slugs)
     const articles = await this.articleService.findAll();
     articles.forEach(article => {
+      if (!article.slug) return; // skip if slug not present
       smStream.write({
-        url: `/article/${article.id}`,
+        url: `/articles/${article.slug}`,
         changefreq: 'daily',
         priority: 1.0,
         lastmod: article.publishDate,

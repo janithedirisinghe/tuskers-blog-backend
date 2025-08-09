@@ -8,13 +8,13 @@ describe('SitemapService', () => {
 
   const mockTuskerService = {
     getAllTuskers: jest.fn().mockResolvedValue([
-      { id: '1', name: 'Test Tusker' }
+      { id: '1', name: 'Test Tusker', slug: 'test-tusker' }
     ]),
   };
 
   const mockArticleService = {
     findAll: jest.fn().mockResolvedValue([
-      { id: '1', title: 'Test Article', publishDate: '2025-01-01' }
+      { id: '1', title: 'Test Article', slug: 'test-article', publishDate: '2025-01-01' }
     ]),
   };
   beforeEach(async () => {
@@ -46,8 +46,8 @@ describe('SitemapService', () => {
       expect(sitemap).toContain('<?xml version="1.0" encoding="UTF-8"?>');
       expect(sitemap).toContain('<urlset');
       expect(sitemap).toContain('https://www.srilankantusckers.com/');
-      expect(sitemap).toContain('/tusker/1');
-      expect(sitemap).toContain('/article/1');
+  expect(sitemap).toContain('/tuskers/test-tusker');
+  expect(sitemap).toContain('/articles/test-article');
       
       expect(mockTuskerService.getAllTuskers).toHaveBeenCalled();
       expect(mockArticleService.findAll).toHaveBeenCalled();
