@@ -6,6 +6,9 @@ export class Tusker extends Document {
   @Prop({ required: true })
   name: string;
 
+  @Prop({ required: true, unique: true })
+  slug: string;
+
   @Prop()
   age: string;
 

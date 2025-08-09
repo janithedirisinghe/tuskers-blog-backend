@@ -33,11 +33,6 @@ export class TuskerController {
     return this.tuskerService.getAllTuskers();
   }
 
-  @Get(':id')
-  async getTuskerById(@Param('id') id: string): Promise<Tusker> {
-    return this.tuskerService.getTuskerById(id);
-  }
-
   @Get('tags/all')
   async getAllTags(): Promise<string[]> {
     return this.tuskerService.getAllTags();
@@ -56,5 +51,15 @@ export class TuskerController {
   @Get('search/search-by-category')
   async getTuskersByCategory(@Query('category') category: string): Promise<Tusker[]> {
     return this.tuskerService.getTuskersByCategory(category);
+  }
+
+  @Get('slug/:slug')
+  async getTuskerBySlug(@Param('slug') slug: string): Promise<Tusker> {
+    return this.tuskerService.getTuskerBySlug(slug);
+  }
+
+  @Get(':id')
+  async getTuskerById(@Param('id') id: string): Promise<Tusker> {
+    return this.tuskerService.getTuskerById(id);
   }
 }

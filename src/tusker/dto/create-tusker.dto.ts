@@ -1,5 +1,6 @@
 export class CreateTuskerDto {
   readonly name: string;
+  readonly slug?: string;
   readonly age?: string;
   readonly category?: string;
   readonly location?: string;

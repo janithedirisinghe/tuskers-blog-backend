@@ -1,0 +1,9 @@
+{
+  "title": "Testing Slug Generation",
+  "excerpt": "This is a test article to verify slug generation",
+  "content": "Content of the test article for slug generation testing.",
+  "category": "test",
+  "tags": ["test", "slug"],
+  "author": "Test Author",
+  "publishDate": "2025-08-07"
+}

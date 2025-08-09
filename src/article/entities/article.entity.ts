@@ -6,6 +6,9 @@ export class Article extends Document {
   @Prop({ required: true })
   title: string;
 
+  @Prop({ required: true, unique: true })
+  slug: string;
+
   @Prop({ required: true })
   excerpt: string;
 

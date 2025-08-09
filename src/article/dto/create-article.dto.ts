@@ -6,6 +6,10 @@ export class CreateArticleDto {
   title: string;
 
   @IsString()
+  @IsOptional()
+  slug?: string;
+
+  @IsString()
   @IsNotEmpty()
   excerpt: string;
 

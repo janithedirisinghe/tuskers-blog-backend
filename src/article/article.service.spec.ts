@@ -25,6 +25,9 @@ describe('ArticleService', () => {
 
     mockArticleModel = jest.fn().mockImplementation(() => mockArticleInstance);
     mockArticleModel.find = jest.fn().mockReturnValue({
+      select: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue([mockArticle]),
+      }),
       exec: jest.fn().mockResolvedValue([mockArticle]),
     });
     mockArticleModel.findById = jest.fn().mockReturnValue({
@@ -64,7 +67,10 @@ describe('ArticleService', () => {
       };
       
       const result = await service.create(createArticleDto as any);
-      expect(mockArticleModel).toHaveBeenCalledWith(createArticleDto);
+      expect(mockArticleModel).toHaveBeenCalledWith({
+        ...createArticleDto,
+        slug: 'new-article'
+      });
       expect(result).toEqual(mockArticle);
     });
   });
