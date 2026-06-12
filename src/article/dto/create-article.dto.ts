@@ -36,4 +36,8 @@ export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
   publishDate: string;
+
+  @IsString()
+  @IsOptional()
+  articleType?: string;
 }

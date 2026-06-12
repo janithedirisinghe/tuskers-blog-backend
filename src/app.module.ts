@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { SitemapModule } from './sitemap/sitemap.module';
 import { ArticleModule } from './article/article.module';
+import { SightingsModule } from './sightings/sightings.module';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ArticleModule } from './article/article.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     AdminModule, 
     TuskerModule, 
-    AuthModule, SitemapModule, ArticleModule],
+    AuthModule, SitemapModule, ArticleModule, SightingsModule],
   controllers: [AppController],
   providers: [AppService],
 })

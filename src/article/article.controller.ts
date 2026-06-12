@@ -1,17 +1,27 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { CreateBotArticleDto } from './dto/create-bot-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { BotApiKeyGuard } from '../auth/bot-api-key.guard';
 
 @Controller('articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  @UseGuards(JwtAuthGuard) 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createArticleDto: CreateArticleDto) {
     return this.articleService.create(createArticleDto);
+  }
+
+  // Bot-only endpoint: articles land as pending until an admin approves them
+  @UseGuards(BotApiKeyGuard)
+  @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true }))
+  @Post('bot')
+  createBotArticle(@Body() createBotArticleDto: CreateBotArticleDto) {
+    return this.articleService.createBotArticle(createBotArticleDto);
   }
 
   @Get()
@@ -35,7 +45,7 @@ export class ArticleController {
   }
 
   @Get('tag/:tag')
-  getArticlesByTag(@Param('tag') tag: string) {
+  getArticlesByTag(@Param('tag') tag: string) { 
     return this.articleService.getArticlesByTag(tag);
   }
 
